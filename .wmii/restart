@@ -1,0 +1,2 @@
+#!/bin/bash
+gksu -m "root needed for restart" "shutdown -r now"
