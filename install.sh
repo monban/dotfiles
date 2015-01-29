@@ -1,5 +1,5 @@
 #!/bin/bash
-for i in $(find . -maxdepth 1 ! -name ".git" ! -name "install.sh" ! -name "*.swp" ! -name "." -printf '%f\n'); do
+for i in $(find . -maxdepth 1 ! -name ".git" ! -name "install.sh" ! -name "*.swp" ! -name "." ! -name ".gitignore" -printf '%f\n'); do
 	if [ -h $HOME/$i ]
 	then
 		echo "Skipping $i, symlink exists"
