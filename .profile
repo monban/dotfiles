@@ -20,8 +20,12 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+
+# Set up golang enviroment variables
 export GOPATH=~/go
-git -C ~/dotfiles pull --rebase &
+export PATH="$PATH:$HOME/go/bin"
+
+git -C ~/dotfiles pull --rebase
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
