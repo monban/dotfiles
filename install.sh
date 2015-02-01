@@ -1,15 +1,20 @@
 #!/bin/bash
-for i in $(find . -maxdepth 1 ! -name ".git" ! -name "install.sh" ! -name "*.swp" ! -name "." ! -name ".gitignore" -printf '%f\n'); do
-	if [ -h $HOME/$i ]
+# Get the directory of the script
+# Sourc http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+for FULLNAME in $(find $DIR -maxdepth 1 ! -name ".git" ! -name "install.sh" ! -name "*.swp" ! -iwholename "$DIR" ! -name ".gitignore")
+do
+	FILENAME=$(basename $FULLNAME)
+	if [ -h $HOME/$FILENAME ]
 	then
-		echo "Skipping $i, symlink exists"
+		echo "Skipping $FILENAME, symlink exists"
 		continue
 	fi
-	if [ -e $HOME/$i ]
+	if [ -e $HOME/$FILENAME ]
 	then
-		echo "Backing up existing copy of $i to $i.backup"
-		mv $HOME/$i $HOME/$i.backup
+		echo "Backing up existing copy of $FILENAME to $FILENAME.backup"
+		mv $HOME/$FILENAME $HOME/$FILENAME.backup
 	fi
-	echo "Linking $i"
-	ln -s `pwd`/$i $HOME/$i
+	echo "Linking $FILENAME"
+	ln -s $FULLNAME $HOME/$FILENAME
 done
