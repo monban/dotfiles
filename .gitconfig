@@ -3,3 +3,7 @@
 	email = himitsu.monban@gmail.com
 [push]
 	default = simple
+[color]
+	ui = true
+[core]
+	excludesfile = ~/.gitignore_global
