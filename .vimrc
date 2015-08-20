@@ -18,6 +18,7 @@
 		Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 		Plugin 'Shougo/neosnippet'
 		Plugin 'Shougo/neosnippet-snippets'
+		Plugin 'vim-scripts/BufOnly.vim'
 	" END Vundle plugins
 
 	call vundle#end()
@@ -32,6 +33,7 @@ set background=dark
 colorscheme solarized
 
 set relativenumber
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2 expandtab
 
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
