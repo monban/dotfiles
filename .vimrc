@@ -19,6 +19,7 @@
 		Plugin 'Shougo/neosnippet'
 		Plugin 'Shougo/neosnippet-snippets'
 		Plugin 'vim-scripts/BufOnly.vim'
+		Plugin 'pangloss/vim-javascript'
 	" END Vundle plugins
 
 	call vundle#end()
@@ -27,6 +28,10 @@
 " NERDTree shortcut
 map <C-e> :NERDTreeToggle<CR>
 
+" Ctrlp options
+let g:ctrlp_custom_ignore = {
+	\ 'dir': 'node_modules'
+	\ }
 " Colors and such
 syntax enable
 set background=dark
