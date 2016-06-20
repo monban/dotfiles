@@ -15,6 +15,7 @@ URxvt*termName: rxvt-unicode
 URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher: google-chrome
 URxvt.matcher.button: 1
+URxvt*skipBuiltinGlyphs: true
 
 ! Solarized color scheme for the X Window System
 !
