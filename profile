@@ -25,12 +25,6 @@ fi
 export GOPATH=~/go
 export PATH="$PATH:$HOME/go/bin"
 
-git -C ~/dotfiles pull --rebase
-source ~/dotfiles/install.sh
-if [ -f ~/.local_profile ]; then
-	source ~/.local_profile
-fi
-
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
