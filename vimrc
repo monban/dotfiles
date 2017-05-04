@@ -1,18 +1,18 @@
 call plug#begin()
-Plug 'tpope/vim-sensible'
-Plug 'fatih/vim-go'
-Plug 'scrooloose/nerdtree'
-Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-surround'
-Plug 'Shougo/neocomplete.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'tpope/vim-rails'
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'vim-scripts/BufOnly.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'scrooloose/nerdcommenter'
+	Plug 'tpope/vim-sensible'
+	Plug 'fatih/vim-go'
+	Plug 'scrooloose/nerdtree'
+	Plug 'kien/ctrlp.vim'
+	Plug 'tpope/vim-surround'
+	Plug 'Shougo/neocomplete.vim'
+	Plug 'altercation/vim-colors-solarized'
+	Plug 'tpope/vim-rails'
+	Plug 'jeffkreeftmeijer/vim-numbertoggle'
+	Plug 'Shougo/neosnippet'
+	Plug 'Shougo/neosnippet-snippets'
+	Plug 'vim-scripts/BufOnly.vim'
+	Plug 'pangloss/vim-javascript'
+	Plug 'scrooloose/nerdcommenter'
 call plug#end()
 
 filetype plugin indent on
@@ -134,5 +134,5 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 " For conceal markers.
 if has('conceal')
-  set conceallevel=2 concealcursor=niv
+  set conceallevel=0 concealcursor=niv
 endif
