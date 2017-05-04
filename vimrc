@@ -1,32 +1,26 @@
-" Vundle setup {
-	set nocompatible              " be iMproved, required
-	filetype off                  " required
+call plug#begin()
+Plug 'tpope/vim-sensible'
+Plug 'fatih/vim-go'
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-surround'
+Plug 'Shougo/neocomplete.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tpope/vim-rails'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'vim-scripts/BufOnly.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/nerdcommenter'
+call plug#end()
 
-	" set the runtime path to include Vundle and initialize
-	set rtp+=~/.vim/bundle/Vundle.vim
-	call vundle#begin()
-
-	" Vundle plugins
-		Plugin 'gmarik/Vundle.vim'
-		Plugin 'fatih/vim-go'
-		Plugin 'scrooloose/nerdtree'
-		Plugin 'kien/ctrlp.vim'
-		Plugin 'tpope/vim-surround'
-		Plugin 'Shougo/neocomplete.vim'
-		Plugin 'altercation/vim-colors-solarized'
-		Plugin 'tpope/vim-rails'
-		Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-		Plugin 'Shougo/neosnippet'
-		Plugin 'Shougo/neosnippet-snippets'
-		Plugin 'vim-scripts/BufOnly.vim'
-		Plugin 'pangloss/vim-javascript'
-	" END Vundle plugins
-
-	call vundle#end()
-	filetype plugin indent on
+filetype plugin indent on
 " }
 " NERDTree shortcut
 map <C-e> :NERDTreeToggle<CR>
+
+let mapleader='\'
 
 " Ctrlp options
 let g:ctrlp_custom_ignore = {
