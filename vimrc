@@ -13,12 +13,26 @@ call plug#begin()
 	Plug 'vim-scripts/BufOnly.vim'
 	Plug 'pangloss/vim-javascript'
 	Plug 'scrooloose/nerdcommenter'
+	Plug 'powerline/powerline'
+	Plug 'vim-syntastic/syntastic'
+	Plug 'mtscout6/syntastic-local-eslint.vim'
 call plug#end()
 
 filetype plugin indent on
 " }
 " NERDTree shortcut
 map <C-e> :NERDTreeToggle<CR>
+
+" Syntastic options
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
 
 let mapleader='\'
 
