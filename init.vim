@@ -12,6 +12,35 @@ call plug#begin('~/.local/share/nvim/plugs')
   Plug 'neovim/nvim-lsp'
 call plug#end()
 
+lua require'nvim_lsp'.gdscript.setup{}
+lua require'nvim_lsp'.html.setup{}
+lua require'nvim_lsp'.bashls.setup{}
+
+augroup initvim
+  autocmd!
+  autocmd FileType sh :echom "Hello world!"
+augroup END
+
+" Bindings
+map <C-e> :NERDTreeToggle<CR>
+map <C-s> :w<CR>
+map <C-g> :Goyo<CR>
+nnoremap <C-Left> :bprevious<CR>
+nnoremap <C-Right> :bnext<CR>
+nnoremap <C-Down> :bdelete<CR>
+nnoremap <C-Up> :enew<CR>
+
+" LSP bindings
+"nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+"nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+"nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+"nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+"nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+"nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+"nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+
 " Colors and theme
 set termguicolors
 autocmd vimenter * colorscheme gruvbox
@@ -23,11 +52,6 @@ let g:neovide_cursor_animation_length=0.25
 let g:neovide_transparency=0.9
 let g:airline_powerline_fonts = 1
 hi Normal ctermbg=none guibg=none
-
-" Bindings
-map <C-e> :NERDTreeToggle<CR>
-map <C-s> :w<CR>
-map <C-g> :Goyo<CR>
 
 " Spaces not tabs!
 set expandtab
