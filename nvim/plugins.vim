@@ -1,0 +1,11 @@
+call plug#begin('~/.local/share/nvim/plugs')
+  Plug 'scrooloose/nerdtree'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'godlygeek/tabular'
+  Plug 'vim-airline/vim-airline'
+  Plug 'junegunn/goyo.vim'
+  Plug 'sheerun/vim-polyglot'
+  Plug 'neovim/nvim-lsp'
+call plug#end()
