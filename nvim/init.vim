@@ -5,7 +5,6 @@ call plug#begin('~/.local/share/nvim/plugs')
   Plug 'tpope/vim-repeat'
   Plug 'scrooloose/nerdcommenter'
   Plug 'godlygeek/tabular'
-  Plug 'morhetz/gruvbox'
   Plug 'vim-airline/vim-airline'
   Plug 'junegunn/goyo.vim'
   Plug 'sheerun/vim-polyglot'
@@ -43,7 +42,8 @@ nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 
 " Colors and theme
 set termguicolors
-autocmd vimenter * colorscheme gruvbox
+colorscheme molokai
+highlight Normal ctermbg=none guibg=none
 set guifont=FiraCode:h26
 let g:neovide_cursor_vfx_mode = "pixiedust"
 let g:neovide_cursor_vfx_particle_density=70.0
@@ -51,7 +51,6 @@ let g:neovide_cursor_vfx_opacity=600.0
 let g:neovide_cursor_animation_length=0.25
 let g:neovide_transparency=0.9
 let g:airline_powerline_fonts = 1
-hi Normal ctermbg=none guibg=none
 
 " Spaces not tabs!
 set expandtab
@@ -78,6 +77,7 @@ function! s:goyo_enter()
   set nocursorline
   let g:neovide_transparency=1.0
   let g:neovide_fullscreen=v:true
+  colorscheme molokai
 endfunction
 
 function! s:goyo_leave()
@@ -91,6 +91,7 @@ function! s:goyo_leave()
   set cursorline
   let g:neovide_transparency=0.9
   let g:neovide_fullscreen=v:false
+  highlight Normal ctermbg=none guibg=none
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
