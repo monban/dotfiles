@@ -15,11 +15,6 @@ lua require'nvim_lsp'.gdscript.setup{}
 lua require'nvim_lsp'.html.setup{}
 lua require'nvim_lsp'.bashls.setup{}
 
-augroup initvim
-  autocmd!
-  autocmd FileType sh :echom "Hello world!"
-augroup END
-
 " Bindings
 map <C-e> :NERDTreeToggle<CR>
 map <C-s> :w<CR>
