@@ -1,13 +1,14 @@
 " Bindings
-map <C-e> :NERDTreeToggle<CR>
-map <C-s> :w<CR>
-map <C-g> :Goyo<CR>
+nnoremap <C-e> :NERDTreeToggle<CR>
+nnoremap <C-s> :w<CR>
+nnoremap <C-g> :Goyo<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 nnoremap <C-Left> :bprevious<CR>
 nnoremap <C-Right> :bnext<CR>
 nnoremap <C-Down> :bdelete<CR>
 nnoremap <C-Up> :enew<CR>
+tnoremap <Esc> <C-\><C-n>
 
 " LSP bindings
 "nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>

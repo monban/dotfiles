@@ -1,10 +1,11 @@
-execute 'source ' . stdpath('config') . '/plugins.vim'
-execute 'source ' . stdpath('config') . '/editing.vim'
-execute 'source ' . stdpath('config') . '/bindings.vim'
-execute 'source ' . stdpath('config') . '/appearence.vim'
-execute 'source ' . stdpath('config') . '/goyo.vim'
-execute 'source ' . stdpath('config') . '/lsp.vim'
-execute 'source ' . stdpath('config') . '/snippets.vim'
+let g:configpath = stdpath('config')
+execute 'source ' . g:configpath . '/plugins.vim'
+execute 'source ' . g:configpath . '/editing.vim'
+execute 'source ' . g:configpath . '/bindings.vim'
+execute 'source ' . g:configpath . '/appearence.vim'
+execute 'source ' . g:configpath . '/goyo.vim'
+execute 'source ' . g:configpath . '/lsp.vim'
+execute 'source ' . g:configpath . '/snippets.vim'
 
 " Reload init.vim after save
 autocmd! BufWritePost init.vim source $MYVIMRC

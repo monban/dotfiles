@@ -11,8 +11,10 @@ function! Snippet(template)
   " Check if snippet file exists
   try
     execute 'read ' . l:templatefile
-    :/<SNIPPET_CURSOR_LOCATION><CR>c//e<CR>
+    execute "normal! /<SNIPPET_CURSOR_LOCATION>\rd//e\r"
+    "execute "normal! G"
   catch /E486:/
     echom "Warning: unable to find default cursor location in snippet"
   endtry
 endfunction
+
