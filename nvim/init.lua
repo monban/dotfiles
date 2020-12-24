@@ -94,15 +94,14 @@ vim.g.netrw_altv=1
 vim.g.netrw_liststyle=3
 vim.g.netrw_winsize=32
 function Toggle_netrw()
-  local function netrw_buffer(buf)
-    return vim.api.nvim_buf_get_option(buf, 'filetype') == 'netrw'
+  local killed = false
+  for _,buf in pairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_option(buf, 'filetype') == 'netrw' then
+      vim.api.nvim_buf_delete(buf, {})
+      killed = true
+    end
   end
-
-  local netrw_buffers = vim.tbl_filter(netrw_buffer, vim.api.nvim_list_bufs())
-  for x,buf in pairs(netrw_buffers) do
-    vim.api.nvim_buf_delete(buf, {})
-  end
-  if #netrw_buffers == 0 then
+  if not killed then
     vim.cmd('Vexplore')
   end
 end
