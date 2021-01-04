@@ -1,0 +1,60 @@
+#!/usr/bin/ruby
+require 'uri'
+require 'cgi'
+require 'net/http'
+require 'json'
+require 'pp'
+
+columns = [`tput cols`.to_i, 80].min
+
+def wrap(str, columns)
+  return unless str.respond_to?(:split)
+  stra = str.split(' ')
+  out = ['']
+  until (stra.empty?) do
+    if out.last.length + stra.first.length > columns
+      out.push ''
+    end
+    out.last << stra.shift << ' '
+  end
+  return out.join("\n")
+end
+
+if ARGV.include? '--json'
+  ARGV.delete '--json'
+  json = true
+end
+
+terms = CGI.escape(ARGV.join ' ')
+base = 'https://api.duckduckgo.com/?t=cli&format=json&q='
+uri = URI(base + terms)
+
+response = JSON.parse(Net::HTTP.get(uri))
+if json
+  pp response
+  return
+end
+
+unless response['Redirect'].empty?
+  puts response['Redirect']
+  Process.spawn "xdg-open '#{response['Redirect']}'"
+  exit
+end
+
+unless response['AbstractText'].empty?
+  puts response['AbstractURL']
+  puts wrap(response['AbstractText'], columns - 2)
+  return
+end
+unless response['RelatedTopics'].empty?
+  response['RelatedTopics'].each do |topic|
+    if topic['FirstURL']
+      puts topic['FirstURL']
+      puts wrap(topic['Text'], columns-2)
+      puts
+    end
+  end
+  return
+end
+pp response
+  #response['AbstractText'].split(' ').each { |w| f.text w; f.breakable }
