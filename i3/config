@@ -4,17 +4,9 @@ focus_follows_mouse no
 
 font pango:Fira Sans 14
 
-# Startup
+exec --no-startup-id picom -b --experimental-backends
 exec --no-startup-id $HOME/.fehbg
 workspace_layout tabbed
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec xrandr --output DP-2 --right-of DP-3 --auto
-exec picom -b --experimental-backends
-exec /usr/bin/dunst
-exec "kitty -T kitty $HOME/bin/tat"
-exec flatpak run im.riot.Riot
-exec flatpak run com.discordapp.Discord
-exec flatpak run com.microsoft.Teams
 
 # Quick Bindings
 bindsym $mod+q exec --no-startup-id $HOME/bin/ddg_gui
@@ -31,10 +23,10 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym $mod+bracketleft     exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 
 bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym $mod+m               exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym $mod+Shift+m         exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 
 bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-bindsym $mod+Shift+m         exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym $mod+m               exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -47,7 +39,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+x scratchpad show
 bindsym $mod+Shift+minus move scratchpad
 
-for_window [class=",*"] border pixel 4
+for_window [class=",*"] border pixel 2
 smart_gaps on
 gaps inner 16
 
@@ -103,20 +95,31 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: www"
-set $ws2 "2: chat"
-set $ws3 "3: term"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws1 1: 
+set $ws2 2: 
+set $ws3 3: 
+set $ws4 4: 
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
 
-workspace $ws1 output 0
-workspace $ws2 output 1
-workspace $ws3 output 0
+workspace "$ws1" output 0
+workspace "$ws2" output 1
+workspace "$ws3" output 0
+
+# Startup programs
+exec --no-startup-id "i3-msg 'workspace $ws2; append_layout /home/flynn/.config/i3/chat.json'"
+#exec --no-startup-id "rename workspace 2 to '2: '"
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xrandr --output DP-2 --right-of DP-3 --auto
+exec --no-startup-id /usr/bin/dunst
+exec $HOME/bin/default-terminal
+exec flatpak run im.riot.Riot
+exec flatpak run com.discordapp.Discord
+exec flatpak run com.microsoft.Teams
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -180,10 +183,10 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 for_window [class="^youtube-music-desktop-app$"] floating enable, move container to scratchpad
-assign [class="^element$"] $ws2
-assign [class="^microsoft teams"] $ws2
-assign [class="^discord$"] $ws2
-assign [title="^kitty$"] $ws3
+#assign [class="^element$"] $ws2
+#assign [class="^microsoft teams"] $ws2
+#assign [class="^discord$"] $ws2
+assign [title="^default-terminal$"] $ws3
 
 bar {
     font pango:Fira Sans, Font Awesome 5 Free 15
