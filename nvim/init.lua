@@ -119,22 +119,22 @@ vim.bo.softtabstop = 2
 --}}}
 
 -- Normal Mode Bindings{{{
-local nnoremap = function(lhs, rhs)
+for lhs, rhs in pairs({
+    ['<C-s>']      = ':w<CR>',
+    ['<C-e>']      = ':lua Toggle_netrw()<CR>',
+    ['<C-g>']      = ':Goyo<CR>',
+    ['<Tab>']      = ':bnext<CR>',
+    ['<S-Tab>']    = ':bprevious<CR>',
+    ['<C-Left>']   = ':bprevious<CR>',
+    ['<C-Right>']  = ':bnext<CR>',
+    ['<C-Down>']   = ':bdelete<CR>',
+    ['<C-Up>']     = ':enew<CR>',
+    ['<leader>ev'] = ':e $MYVIMRC<cr>',
+    ['<C-p>']      = ':Files<cr>',
+    ['<C-Space>']  = '<C-x><C-o>',
+  }) do
   vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
 end
-nnoremap('<C-s>', ':w<CR>')
-nnoremap('<C-e>', ':lua Toggle_netrw()<CR>')
-nnoremap('<C-s>', ':w<CR>')
-nnoremap('<C-g>', ':Goyo<CR>')
-nnoremap('<Tab>', ':bnext<CR>')
-nnoremap('<S-Tab>', ':bprevious<CR>')
-nnoremap('<C-Left>', ':bprevious<CR>')
-nnoremap('<C-Right>', ':bnext<CR>')
-nnoremap('<C-Down>', ':bdelete<CR>')
-nnoremap('<C-Up>', ':enew<CR>')
-nnoremap('<leader>ev', ':e $MYVIMRC<cr>')
-nnoremap('<C-p>', ':Files<cr>')
-nnoremap('<C-Space>', '<C-x><C-o>')
 --}}}
 
 -- Other bindings{{{

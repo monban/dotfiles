@@ -1,0 +1,2 @@
+#!/bin/sh
+kitty -T default-terminal tmux -f $HOME/.config/tmux/tmux.conf attach

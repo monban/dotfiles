@@ -7,10 +7,13 @@ call plug#begin('~/.local/share/nvim/plugs')
   Plug 'vim-airline/vim-airline'
   Plug 'junegunn/goyo.vim'
   Plug 'sheerun/vim-polyglot'
-  Plug 'neovim/nvim-lsp'
+  Plug 'neovim/nvim-lspconfig'
   Plug 'chrisbra/unicode.vim'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'roxma/nvim-yarp'
+  Plug 'ncm2/ncm2'
   Plug 'ncm2/float-preview.nvim'
+  Plug 'ncm2/ncm2-ultisnips'
+  Plug 'SirVer/ultisnips'
   Plug 'Olical/conjure', {'tag': 'v4.5.0'}
   Plug 'tpope/vim-dispatch'
   Plug 'radenling/vim-dispatch-neovim'
@@ -18,4 +21,9 @@ call plug#begin('~/.local/share/nvim/plugs')
   Plug 'jiangmiao/auto-pairs'
   Plug 'guns/vim-sexp'
   Plug 'tpope/vim-sexp-mappings-for-regular-people'
+  Plug 'OmniSharp/Omnisharp-vim'
+  Plug 'nickspoons/vim-sharpenup'
+  Plug 'junegunn/fzf.vim'
+  Plug 'dense-analysis/ale'
+  Plug 'tpope/vim-fugitive'
 call plug#end()

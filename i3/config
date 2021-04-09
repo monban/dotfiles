@@ -117,9 +117,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id xrandr --output DP-2 --right-of DP-3 --auto
 exec --no-startup-id /usr/bin/dunst
 exec $HOME/bin/default-terminal
-exec flatpak run im.riot.Riot
-exec flatpak run com.discordapp.Discord
-exec flatpak run com.microsoft.Teams
+exec --no-startup-id flatpak run im.riot.Riot
+exec --no-startup-id lightcord
+exec --no-startup-id flatpak run com.microsoft.Teams
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -187,6 +187,7 @@ for_window [class="^youtube-music-desktop-app$"] floating enable, move container
 #assign [class="^microsoft teams"] $ws2
 #assign [class="^discord$"] $ws2
 assign [title="^default-terminal$"] $ws3
+for_window [class="^race$"] floating enable
 
 bar {
     font pango:Fira Sans, Font Awesome 5 Free 15

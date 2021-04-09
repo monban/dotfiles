@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/home/flynn/Notes/strider'
+let g:netrw_dirhist_8='/home/flynn/Notes/tides'
+let g:netrw_dirhist_7='/home/flynn/Notes'
+let g:netrw_dirhist_6='/home/flynn/Code/nginx-test'
+let g:netrw_dirhist_5='/home/flynn/Code/nginx-test/www'
+let g:netrw_dirhist_4='/home/flynn/Code/nginx-test'
+let g:netrw_dirhist_3='/home/flynn/Notes/tides'
+let g:netrw_dirhist_2='/home/flynn/Notes/strider'
+let g:netrw_dirhist_1='/home/flynn/Notes'
+let g:netrw_dirhist_0='/home/flynn'

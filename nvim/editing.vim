@@ -9,11 +9,6 @@ set number
 set cursorline
 set hidden
 
-" Enable Deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
-set completeopt-=preview
-
 " Floating window
 "let g:float_preview#docked = 0
 "let g:float_preview#max_width = 80

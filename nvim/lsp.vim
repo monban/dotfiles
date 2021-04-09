@@ -1,4 +1,4 @@
-lua require'nvim_lsp'.gdscript.setup{}
-lua require'nvim_lsp'.html.setup{}
-lua require'nvim_lsp'.bashls.setup{}
+lua require'lspconfig'.gdscript.setup{}
+lua require'lspconfig'.html.setup{}
+lua require'lspconfig'.bashls.setup{}
 

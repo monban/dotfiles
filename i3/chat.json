@@ -59,11 +59,11 @@
                 "y": 58
             },
             "marks": [],
-            "name": "#patreon-only - Discord",
+            "name": "lightcord",
             "percent": 0.333333333333333,
             "swallows": [
                 {
-                    "class": "^discord$"
+                    "class": "^lightcord$"
                 }
             ],
             "type": "con"
