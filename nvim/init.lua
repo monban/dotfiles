@@ -52,6 +52,7 @@ local servers = {
   'clangd',
   'omnisharp',
   'gdscript',
+  'angularls',
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -61,9 +62,9 @@ end
 --}}}
 
 -- Display Settings{{{
+vim.o.termguicolors = true
 vim.cmd('colorscheme molokai')
 vim.cmd('highlight Normal ctermbg=none guibg=none')
-vim.o.termguicolors = true
 vim.wo.number = true
 vim.wo.wrap = false
 vim.wo.cursorline = true
@@ -87,24 +88,10 @@ vim.cmd('autocmd! User FloatPreviewWinOpen')
 vim.cmd('autocmd User FloatPreviewWinOpen lua DisableExtras()')
 --}}}
 
--- netrw stuff{{{
-vim.g.netrw_banner=0
-vim.g.netrw_browse_split=4
-vim.g.netrw_altv=1
-vim.g.netrw_liststyle=3
-vim.g.netrw_winsize=32
-function Toggle_netrw()
-  local killed = false
-  for _,buf in pairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_get_option(buf, 'filetype') == 'netrw' then
-      vim.api.nvim_buf_delete(buf, {})
-      killed = true
-    end
-  end
-  if not killed then
-    vim.cmd('Vexplore')
-  end
-end
+-- file browser stuff{{{
+vim.g['rnvimr_enable_ex'] = 1
+vim.g['rnvimr_enable_picker'] = 1
+vim.g['rnvimr_enable_bw'] = 1
 --}}}
 
 -- Completion Settings{{{
@@ -120,18 +107,20 @@ vim.bo.softtabstop = 2
 
 -- Normal Mode Bindings{{{
 for lhs, rhs in pairs({
-    ['<C-s>']      = ':w<CR>',
-    ['<C-e>']      = ':lua Toggle_netrw()<CR>',
-    ['<C-g>']      = ':Goyo<CR>',
-    ['<Tab>']      = ':bnext<CR>',
-    ['<S-Tab>']    = ':bprevious<CR>',
-    ['<C-Left>']   = ':bprevious<CR>',
-    ['<C-Right>']  = ':bnext<CR>',
-    ['<C-Down>']   = ':bdelete<CR>',
-    ['<C-Up>']     = ':enew<CR>',
+    ['<C-s>']      = ':w<cr>',
+    ['<C-e>']      = ':lua Toggle_netrw()<cr>',
+    ['<C-g>']      = ':Goyo<cr>',
+    ['<Tab>']      = ':BufferLineCycleNext<cr>',
+    ['<S-Tab>']    = ':BufferLineCyclePrev<cr>',
+    ['<C-Left>']   = ':bprevious<cr>',
+    ['<C-Right>']  = ':bnext<cr>',
+    ['<C-Down>']   = ':bdelete<cr>',
+    ['<C-Up>']     = ':enew<cr>',
     ['<leader>ev'] = ':e $MYVIMRC<cr>',
     ['<C-p>']      = ':Files<cr>',
-    ['<C-Space>']  = '<C-x><C-o>',
+    ['<C-e>']      = ':RnvimrToggle<cr>',
+    ['']         = ":call NERDComment('n', 'toggle')<cr>",
+    ['<C-w>']      = ":bdelete<cr>",
   }) do
   vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
 end
@@ -148,6 +137,30 @@ vim.cmd('command! LspAttached :lua print(vim.inspect(vim.lsp.buf_get_clients()))
 
 -- Etc{{{
 vim.wo.foldmethod = 'marker'
+require'bufferline'.setup{
+  options = {
+    view = "multiwindow",
+    numbers = "none",
+    --number_style = "superscript" | "" | { "none", "subscript" }, -- buffer_id at index 1, ordinal at index 2
+    mappings = false,
+    separator_style = 'thick',
+    modified_icon = '●',
+    close_icon = '',
+    left_trunc_marker = '',
+    right_trunc_marker = '',
+    max_name_length = 32,
+    max_prefix_length = 15, -- prefix used when a buffer is deduplicated
+    tab_size = 32,
+    diagnostics = "nvim_lsp",
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    show_tab_indicators = false,
+    persist_buffer_sort = true,
+    enforce_regular_tabs = false,
+    always_show_bufferline = true,
+    sort_by = 'relative_directory',
+  }
+}
 --}}}
 
 -- statusline{{{
