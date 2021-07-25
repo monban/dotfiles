@@ -128,6 +128,7 @@ end
 
 -- Other bindings{{{
 vim.api.nvim_set_keymap('i', 'kj', '<Esc>', {noremap=true,silent=true})
+vim.api.nvim_set_keymap('v', '', ":call NERDComment('x', 'toggle')<cr>", {noremap=true,silent=true})
 --}}}
 
 -- Autocommands{{{
