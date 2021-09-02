@@ -37,9 +37,6 @@
 [submodule ".local/share/nvim/site/pack/editing/start/vim-go"]
 	path = .local/share/nvim/site/pack/editing/start/vim-go
 	url = https://github.com/fatih/vim-go.git
-[submodule ".local/share/nvim/site/pack/editing/start/ncm2"]
-	path = .local/share/nvim/site/pack/editing/start/ncm2
-	url = https://github.com/ncm2/ncm2
 [submodule ".local/share/nvim/site/pack/editing/start/nvim-yarp"]
 	path = .local/share/nvim/site/pack/editing/start/nvim-yarp
 	url = https://github.com/roxma/nvim-yarp
