@@ -3,7 +3,7 @@ vim.cmd('packloadall')
 -- LSP{{{
 local nvim_lsp = require('lspconfig')
 local on_attach = function(_, bufnr)
-  require('completion').on_attach()
+--  require('completion').on_attach()
   local opts = { noremap=true, silent=true }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -14,6 +14,9 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
+  vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  --vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-Space>', '', opts)
+  --vim.bo.omnifunc = vim.lsp.omnifunc
 end
 
 nvim_lsp.sumneko_lua.setup {
@@ -46,13 +49,21 @@ nvim_lsp.solargraph.setup {
   on_attach = on_attach
 }
 
+local pid = vim.fn.getpid()
+local omnisharp_bin = "/home/flynn/tmp/run"
+
+nvim_lsp.omnisharp.setup{
+  cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+  on_attach = on_attach,
+}
+
 local servers = {
   'jsonls',
   'vimls',
   'clangd',
-  'omnisharp',
   'gdscript',
   'angularls',
+  'gopls',
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -120,7 +131,6 @@ for lhs, rhs in pairs({
     ['<C-p>']      = ':Files<cr>',
     ['<C-e>']      = ':RnvimrToggle<cr>',
     ['']         = ":call NERDComment('n', 'toggle')<cr>",
-    ['<C-w>']      = ":bdelete<cr>",
   }) do
   vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
 end
@@ -129,6 +139,7 @@ end
 -- Other bindings{{{
 vim.api.nvim_set_keymap('i', 'kj', '<Esc>', {noremap=true,silent=true})
 vim.api.nvim_set_keymap('v', '', ":call NERDComment('x', 'toggle')<cr>", {noremap=true,silent=true})
+>>>>>>> Stashed changes
 --}}}
 
 -- Autocommands{{{
