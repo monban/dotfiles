@@ -73,6 +73,7 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- Based on https://github.com/golang/tools/blob/d39bbca0a38c8407ab8046997c3cc0973f428995/gopls/doc/vim.md#neovim-imports
 local function lsp_codeaction(code_action, timeout_ms)
   local context = { only = { code_action } }
   vim.validate { context = { context, "t", true } }
@@ -107,6 +108,7 @@ function Goimports()
   lsp_codeaction("source.organizeImports")
 end
 
+-- Based on make_position_param from $VIMRUNTIME/lua/vim/lsp/util.lua
 local function make_function_position_param()
   local row, col = unpack(vim.call("searchpos", "\\w(", "bn")) -- TODO: restrict to current line
   row = row - 1
@@ -118,6 +120,7 @@ local function make_function_position_param()
   return { line = row; character = col; }
 end
 
+-- Based on vim.lsp.util.make_position_params
 local function make_function_position_params()
   return {
     textDocument = vim.lsp.util.make_text_document_params();
@@ -125,11 +128,13 @@ local function make_function_position_params()
   }
 end
 
+-- Based on vim.lsp.buf.hover
 function Show_func_help()
   local params = make_function_position_params()
   vim.lsp.buf_request(0, "textDocument/signatureHelp", params)
 end
 
+-- Stoled from tjdevries
 function P(foo)
   print(vim.inspect(foo))
   return foo
