@@ -117,9 +117,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id xrandr --output DP-2 --right-of DP-3 --auto
 exec --no-startup-id /usr/bin/dunst
 exec $HOME/bin/default-terminal
-exec --no-startup-id flatpak run im.riot.Riot
-exec --no-startup-id lightcord
-exec --no-startup-id flatpak run com.microsoft.Teams
+#exec --no-startup-id flatpak run im.riot.Riot
+#exec --no-startup-id lightcord
+#exec --no-startup-id flatpak run com.microsoft.Teams
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
