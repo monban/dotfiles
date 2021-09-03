@@ -103,6 +103,28 @@ end
 function goimports()
   lsp_codeaction("source.organizeImports")
 end
+
+function get_function_location()
+  local row, col = P(vim.call("searchpos", "\\w(", "bn"))
+  local line = vim.api.nvim_buf_get_lines(0, row, row, true)[1]
+  if not line then
+    return { line = 0; character = 0; }
+  end
+  col = vim.str_utfindex(line, col)
+  P(func_loc)
+  return { line = row-1; character = col; }
+end
+
+function show_func_help()
+  local params = get_function_location()
+  vim.lsp.buf_request("textDocument/hover")
+end
+
+function P(foo)
+  print(vim.inspect(foo))
+  return foo
+end
+
 --}}}
 
 -- Display Settings{{{
