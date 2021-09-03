@@ -15,9 +15,13 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-space>', '<C-x><C-o>', opts)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  vim.api.nvim_command("au! * <buffer>")
+  vim.api.nvim_command("au CursorHoldI <buffer> :lua Show_func_help()")
 end
 
 nvim_lsp.sumneko_lua.setup {
+  cmd = {"/usr/bin/lua-language-server"},
   on_attach = on_attach,
   settings = {
     Lua = {
@@ -69,9 +73,8 @@ for _, lsp in ipairs(servers) do
   }
 end
 
- -- TODO: this doesn't work
-function lsp_codeaction(action, timeout_ms)
-  local context = { only = { action } }
+local function lsp_codeaction(code_action, timeout_ms)
+  local context = { only = { code_action } }
   vim.validate { context = { context, "t", true } }
 
   local params = vim.lsp.util.make_range_params()
@@ -100,24 +103,31 @@ function lsp_codeaction(action, timeout_ms)
   end
 end
 
-function goimports()
+function Goimports()
   lsp_codeaction("source.organizeImports")
 end
 
-function get_function_location()
-  local row, col = P(vim.call("searchpos", "\\w(", "bn"))
-  local line = vim.api.nvim_buf_get_lines(0, row, row, true)[1]
+local function make_function_position_param()
+  local row, col = unpack(vim.call("searchpos", "\\w(", "bn")) -- TODO: restrict to current line
+  row = row - 1
+  local line = vim.api.nvim_buf_get_lines(0, row, row+1, true)[1]
   if not line then
     return { line = 0; character = 0; }
   end
   col = vim.str_utfindex(line, col)
-  P(func_loc)
-  return { line = row-1; character = col; }
+  return { line = row; character = col; }
 end
 
-function show_func_help()
-  local params = get_function_location()
-  vim.lsp.buf_request("textDocument/hover")
+local function make_function_position_params()
+  return {
+    textDocument = vim.lsp.util.make_text_document_params();
+    position = make_function_position_param();
+  }
+end
+
+function Show_func_help()
+  local params = make_function_position_params()
+  vim.lsp.buf_request(0, "textDocument/signatureHelp", params)
 end
 
 function P(foo)
@@ -130,7 +140,6 @@ end
 -- Display Settings{{{
       vim.o.termguicolors = true
       vim.cmd('colorscheme molokai')
-      vim.cmd('highlight Normal ctermbg=none guibg=none')
       vim.wo.number = true
       vim.wo.wrap = false
       vim.wo.cursorline = true
@@ -208,7 +217,6 @@ end
           view = "multiwindow",
           numbers = "none",
           --number_style = "superscript" | "" | { "none", "subscript" }, -- buffer_id at index 1, ordinal at index 2
-          mappings = false,
           separator_style = 'thick',
           modified_icon = '●',
           close_icon = '',
