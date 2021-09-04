@@ -169,7 +169,8 @@ require'nvim-treesitter.configs'.setup {
 
 -- Display Settings{{{
 vim.o.termguicolors = true
-vim.cmd('colorscheme molokai')
+vim.cmd('syntax off')
+vim.cmd('colorscheme gruvbox')
 vim.wo.number = true
 vim.wo.wrap = false
 vim.wo.cursorline = true
@@ -213,7 +214,6 @@ vim.bo.softtabstop = 2
 -- Normal Mode Bindings{{{
 for lhs, rhs in pairs({
   ['<C-s>']      = ':w<cr>',
-  ['<C-e>']      = ':lua Toggle_netrw()<cr>',
   ['<C-g>']      = ':Goyo<cr>',
   ['<Tab>']      = ':BufferLineCycleNext<cr>',
   ['<S-Tab>']    = ':BufferLineCyclePrev<cr>',
