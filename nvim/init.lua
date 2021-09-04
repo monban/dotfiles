@@ -9,10 +9,10 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>d', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-space>', '<C-x><C-o>', opts)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -110,7 +110,10 @@ end
 
 -- Based on make_position_param from $VIMRUNTIME/lua/vim/lsp/util.lua
 local function make_function_position_param()
-  local row, col = unpack(vim.call("searchpos", "\\w(", "bn")) -- TODO: restrict to current line
+  local row, col = unpack(vim.call("searchpos", "\\w(", "bn", vim.call("line", ".")))
+  if (row == nil or col == nil) then
+    return { line = 0; character = 0 }
+  end
   row = row - 1
   local line = vim.api.nvim_buf_get_lines(0, row, row+1, true)[1]
   if not line then
@@ -205,10 +208,11 @@ vim.o.completeopt = 'menuone,noinsert,noselect,longest'
 --}}}
 
 -- Tab Settings{{{
-vim.bo.expandtab = true
-vim.bo.tabstop = 2
-vim.bo.shiftwidth = 2
-vim.bo.softtabstop = 2
+vim.o.expandtab = true
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.softtabstop = 2
+vim.cmd("filetype indent off")
 --}}}
 
 -- Normal Mode Bindings{{{
@@ -236,11 +240,10 @@ vim.api.nvim_set_keymap('v', '', ":call NERDComment('x', 'toggle')<cr>", {norem
 --}}}
 
 -- Autocommands{{{
---vim.cmd("autocmd! BufEnter * lua require'completion'.on_attach()")
-vim.cmd('command! LspAttached :lua print(vim.inspect(vim.lsp.buf_get_clients()))')
 --}}}
 
 -- Etc{{{
+vim.o.updatetime = 1000
 vim.wo.foldmethod = 'marker'
 require'bufferline'.setup{
   options = {
