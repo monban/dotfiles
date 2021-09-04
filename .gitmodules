@@ -1,46 +1,52 @@
-[submodule "local/share/nvim/site/pack/editing/start/vim-surround"]
+[submodule "vim-surround"]
 	path = .local/share/nvim/site/pack/editing/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "local/share/nvim/site/pack/editing/start/vim-repeat"]
+	branch = master
+[submodule "vim-repeat"]
 	path = .local/share/nvim/site/pack/editing/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "local/share/nvim/site/pack/editing/start/tabular"]
+	branch = master
+[submodule "tabular"]
 	path = .local/share/nvim/site/pack/editing/start/tabular
 	url = https://github.com/godlygeek/tabular.git
-[submodule "local/share/nvim/site/pack/editing/start/emmet-vim"]
+	branch = master
+[submodule "emmet-vim"]
 	path = .local/share/nvim/site/pack/editing/start/emmet-vim
 	url = https://github.com/mattn/emmet-vim.git
-[submodule "local/share/nvim/site/pack/editing/start/nvim-lspconfig"]
+	branch = master
+[submodule "nvim-lspconfig"]
 	path = .local/share/nvim/site/pack/editing/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
-[submodule "local/share/nvim/site/pack/editing/start/nerdcommenter"]
+	branch = master
+[submodule "nerdcommenter"]
 	path = .local/share/nvim/site/pack/editing/start/nerdcommenter
 	url = https://github.com/preservim/nerdcommenter.git
-[submodule "local/share/nvim/site/pack/editing/start/fzf.vim"]
+	branch = master
+[submodule "fzf.vim"]
 	path = .local/share/nvim/site/pack/editing/start/fzf.vim
 	url = https://github.com/junegunn/fzf.vim.git
-[submodule "local/share/nvim/site/pack/editing/start/vim-polyglot"]
+	branch = master
+[submodule "vim-polyglot"]
 	path = .local/share/nvim/site/pack/editing/start/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot.git
-[submodule ".local/share/nvim/site/pack/editing/start/vim-vinegar"]
-	path = .local/share/nvim/site/pack/editing/start/vim-vinegar
-	url = https://github.com/tpope/vim-vinegar
-[submodule ".local/share/nvim/site/pack/editing/start/rnvimr"]
+	branch = master
+[submodule "rnvimr"]
 	path = .local/share/nvim/site/pack/editing/start/rnvimr
 	url = https://github.com/kevinhwang91/rnvimr
-[submodule ".local/share/nvim/site/pack/editing/start/nvim-bufferline.lua"]
+	branch = main
+[submodule "nvim-bufferline.lua"]
 	path = .local/share/nvim/site/pack/editing/start/nvim-bufferline.lua
 	url = https://github.com/akinsho/nvim-bufferline.lua
-[submodule ".local/share/nvim/site/pack/editing/start/nvim-web-devicons"]
+	branch = master
+[submodule "nvim-web-devicons"]
 	path = .local/share/nvim/site/pack/editing/start/nvim-web-devicons
 	url = https://github.com/kyazdani42/nvim-web-devicons
-[submodule ".local/share/nvim/site/pack/editing/start/vim-go"]
-	path = .local/share/nvim/site/pack/editing/start/vim-go
-	url = https://github.com/fatih/vim-go.git
-[submodule ".local/share/nvim/site/pack/editing/start/nvim-yarp"]
+	branch = master
+[submodule "nvim-yarp"]
 	path = .local/share/nvim/site/pack/editing/start/nvim-yarp
 	url = https://github.com/roxma/nvim-yarp
-[submodule ".local/share/nvim/site/pack/editing/start/nvim-treesitter"]
+	branch = master
+[submodule "nvim-treesitter"]
 	path = .local/share/nvim/site/pack/editing/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
 	branch = 0.5-compat
