@@ -152,9 +152,16 @@ require'nvim-treesitter.configs'.setup {
     "gomod",
     "json",
     "javascript",
+    "lua",
   },
   highlight = {
     enable = true,
+  },
+  indent = {
+    enable = true,
+    disable = {
+      "go",
+    },
   },
   additional_vim_regex_highlighting = false,
 }
@@ -205,20 +212,20 @@ vim.bo.softtabstop = 2
 
 -- Normal Mode Bindings{{{
 for lhs, rhs in pairs({
-    ['<C-s>']      = ':w<cr>',
-    ['<C-e>']      = ':lua Toggle_netrw()<cr>',
-    ['<C-g>']      = ':Goyo<cr>',
-    ['<Tab>']      = ':BufferLineCycleNext<cr>',
-    ['<S-Tab>']    = ':BufferLineCyclePrev<cr>',
-    ['<C-Left>']   = ':bprevious<cr>',
-    ['<C-Right>']  = ':bnext<cr>',
-    ['<C-Down>']   = ':bdelete<cr>',
-    ['<C-Up>']     = ':enew<cr>',
-    ['<leader>ev'] = ':e $MYVIMRC<cr>',
-    ['<C-p>']      = ':Files<cr>',
-    ['<C-e>']      = ':RnvimrToggle<cr>',
-    ['']         = ":call NERDComment('n', 'toggle')<cr>",
-  }) do
+  ['<C-s>']      = ':w<cr>',
+  ['<C-e>']      = ':lua Toggle_netrw()<cr>',
+  ['<C-g>']      = ':Goyo<cr>',
+  ['<Tab>']      = ':BufferLineCycleNext<cr>',
+  ['<S-Tab>']    = ':BufferLineCyclePrev<cr>',
+  ['<C-Left>']   = ':bprevious<cr>',
+  ['<C-Right>']  = ':bnext<cr>',
+  ['<C-Down>']   = ':bdelete<cr>',
+  ['<C-Up>']     = ':enew<cr>',
+  ['<leader>ev'] = ':e $MYVIMRC<cr>',
+  ['<C-p>']      = ':Files<cr>',
+  ['<C-e>']      = ':RnvimrToggle<cr>',
+  ['']         = ":call NERDComment('n', 'toggle')<cr>",
+}) do
   vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
 end
 --}}}

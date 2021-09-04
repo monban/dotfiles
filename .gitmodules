@@ -46,3 +46,11 @@
 	path = .local/share/nvim/site/pack/editing/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
 	branch = 0.5-compat
+[submodule "gruvbox.nvim"]
+	path = .local/share/nvim/site/pack/editing/start/gruvbox.nvim
+	url = https://github.com/ellisonleao/gruvbox.nvim
+	branch = main
+[submodule "lush.nvim"]
+	path = .local/share/nvim/site/pack/editing/start/lush.nvim
+	url = https://github.com/rktjmp/lush.nvim
+	branch = main
