@@ -142,124 +142,142 @@ end
 
 --}}}
 
+-- Treesitter {{{
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {
+    "go",
+    "ruby",
+    "fish",
+    "bash",
+    "gomod",
+    "json",
+    "javascript",
+  },
+  highlight = {
+    enable = true,
+  },
+  additional_vim_regex_highlighting = false,
+}
+-- }}}
+
 -- Display Settings{{{
-      vim.o.termguicolors = true
-      vim.cmd('colorscheme molokai')
-      vim.wo.number = true
-      vim.wo.wrap = false
-      vim.wo.cursorline = true
-      vim.o.hidden = true
-      vim.wo.signcolumn = 'number'
-      vim.wo.list = true
-      vim.o.listchars='tab:->,nbsp:_,trail:.'
-      vim.o.guifont = 'FiraCode-Regular:h22'
-      vim.g.airline_powerline_fonts = 1
+vim.o.termguicolors = true
+vim.cmd('colorscheme molokai')
+vim.wo.number = true
+vim.wo.wrap = false
+vim.wo.cursorline = true
+vim.o.hidden = true
+vim.wo.signcolumn = 'number'
+vim.wo.list = true
+vim.o.listchars='tab:->,nbsp:_,trail:.'
+vim.o.guifont = 'FiraCode-Regular:h22'
+vim.g.airline_powerline_fonts = 1
 
-      vim.g['float_preview#docked'] = 1
-      vim.g['float_preview#auto_close'] = 0
-      function DisableExtras()
-        print(vim.g['float_preview#win'])
-        vim.api.nvim_win_set_option(vim.g['float_preview#win'], 'number', true)
-        vim.api.nvim_win_set_option(vim.g['float_preview#win'], 'wrap', false)
-        vim.api.nvim_win_set_option(vim.g['float_preview#win'], 'linebreak', false)
-      end
+vim.g['float_preview#docked'] = 1
+vim.g['float_preview#auto_close'] = 0
+function DisableExtras()
+  print(vim.g['float_preview#win'])
+  vim.api.nvim_win_set_option(vim.g['float_preview#win'], 'number', true)
+  vim.api.nvim_win_set_option(vim.g['float_preview#win'], 'wrap', false)
+  vim.api.nvim_win_set_option(vim.g['float_preview#win'], 'linebreak', false)
+end
 
-      vim.cmd('autocmd! User FloatPreviewWinOpen')
-      vim.cmd('autocmd User FloatPreviewWinOpen lua DisableExtras()')
+vim.cmd('autocmd! User FloatPreviewWinOpen')
+vim.cmd('autocmd User FloatPreviewWinOpen lua DisableExtras()')
 --}}}
 
 -- file browser stuff{{{
-      vim.g['rnvimr_enable_ex'] = 1
-      vim.g['rnvimr_enable_picker'] = 1
-      vim.g['rnvimr_enable_bw'] = 1
+vim.g['rnvimr_enable_ex'] = 1
+vim.g['rnvimr_enable_picker'] = 1
+vim.g['rnvimr_enable_bw'] = 1
 --}}}
 
 -- Completion Settings{{{
-      vim.o.completeopt = 'menuone,noinsert,noselect,longest'
+vim.o.completeopt = 'menuone,noinsert,noselect,longest'
 --}}}
 
 -- Tab Settings{{{
-      vim.bo.expandtab = true
-      vim.bo.tabstop = 2
-      vim.bo.shiftwidth = 2
-      vim.bo.softtabstop = 2
+vim.bo.expandtab = true
+vim.bo.tabstop = 2
+vim.bo.shiftwidth = 2
+vim.bo.softtabstop = 2
 --}}}
 
 -- Normal Mode Bindings{{{
-      for lhs, rhs in pairs({
-          ['<C-s>']      = ':w<cr>',
-          ['<C-e>']      = ':lua Toggle_netrw()<cr>',
-          ['<C-g>']      = ':Goyo<cr>',
-          ['<Tab>']      = ':BufferLineCycleNext<cr>',
-          ['<S-Tab>']    = ':BufferLineCyclePrev<cr>',
-          ['<C-Left>']   = ':bprevious<cr>',
-          ['<C-Right>']  = ':bnext<cr>',
-          ['<C-Down>']   = ':bdelete<cr>',
-          ['<C-Up>']     = ':enew<cr>',
-          ['<leader>ev'] = ':e $MYVIMRC<cr>',
-          ['<C-p>']      = ':Files<cr>',
-          ['<C-e>']      = ':RnvimrToggle<cr>',
-          ['']         = ":call NERDComment('n', 'toggle')<cr>",
-        }) do
-        vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
-      end
+for lhs, rhs in pairs({
+    ['<C-s>']      = ':w<cr>',
+    ['<C-e>']      = ':lua Toggle_netrw()<cr>',
+    ['<C-g>']      = ':Goyo<cr>',
+    ['<Tab>']      = ':BufferLineCycleNext<cr>',
+    ['<S-Tab>']    = ':BufferLineCyclePrev<cr>',
+    ['<C-Left>']   = ':bprevious<cr>',
+    ['<C-Right>']  = ':bnext<cr>',
+    ['<C-Down>']   = ':bdelete<cr>',
+    ['<C-Up>']     = ':enew<cr>',
+    ['<leader>ev'] = ':e $MYVIMRC<cr>',
+    ['<C-p>']      = ':Files<cr>',
+    ['<C-e>']      = ':RnvimrToggle<cr>',
+    ['']         = ":call NERDComment('n', 'toggle')<cr>",
+  }) do
+  vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
+end
 --}}}
 
 -- Other bindings{{{
-      vim.api.nvim_set_keymap('i', 'kj', '<Esc>', {noremap=true,silent=true})
-      vim.api.nvim_set_keymap('v', '', ":call NERDComment('x', 'toggle')<cr>", {noremap=true,silent=true})
+vim.api.nvim_set_keymap('i', 'kj', '<Esc>', {noremap=true,silent=true})
+vim.api.nvim_set_keymap('v', '', ":call NERDComment('x', 'toggle')<cr>", {noremap=true,silent=true})
 --}}}
 
 -- Autocommands{{{
-      --vim.cmd("autocmd! BufEnter * lua require'completion'.on_attach()")
-      vim.cmd('command! LspAttached :lua print(vim.inspect(vim.lsp.buf_get_clients()))')
+--vim.cmd("autocmd! BufEnter * lua require'completion'.on_attach()")
+vim.cmd('command! LspAttached :lua print(vim.inspect(vim.lsp.buf_get_clients()))')
 --}}}
 
 -- Etc{{{
-      vim.wo.foldmethod = 'marker'
-      require'bufferline'.setup{
-        options = {
-          view = "multiwindow",
-          numbers = "none",
-          --number_style = "superscript" | "" | { "none", "subscript" }, -- buffer_id at index 1, ordinal at index 2
-          separator_style = 'thick',
-          modified_icon = '●',
-          close_icon = '',
-          left_trunc_marker = '',
-          right_trunc_marker = '',
-          max_name_length = 32,
-          max_prefix_length = 15, -- prefix used when a buffer is deduplicated
-          tab_size = 32,
-          diagnostics = "nvim_lsp",
-          show_buffer_close_icons = false,
-          show_close_icon = false,
-          show_tab_indicators = false,
-          persist_buffer_sort = true,
-          enforce_regular_tabs = false,
-          always_show_bufferline = true,
-          sort_by = 'relative_directory',
-        }
-      }
+vim.wo.foldmethod = 'marker'
+require'bufferline'.setup{
+  options = {
+    view = "multiwindow",
+    numbers = "none",
+    --number_style = "superscript" | "" | { "none", "subscript" }, -- buffer_id at index 1, ordinal at index 2
+    separator_style = 'thick',
+    modified_icon = '●',
+    close_icon = '',
+    left_trunc_marker = '',
+    right_trunc_marker = '',
+    max_name_length = 32,
+    max_prefix_length = 15, -- prefix used when a buffer is deduplicated
+    tab_size = 32,
+    diagnostics = "nvim_lsp",
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    show_tab_indicators = false,
+    persist_buffer_sort = true,
+    enforce_regular_tabs = false,
+    always_show_bufferline = true,
+    sort_by = 'relative_directory',
+  }
+}
 --}}}
 
 -- statusline{{{
-      vim.cmd('command! Statusl lua statusl()')
-      local statusline = {
-        "%#DiffAdd#%{(mode()=='n')?'  NORMAL ':''}",
-        "%6*%{(mode()=='i')?'  INSERT ':''}",
-        "%8*%{(mode()=='r')?'  RPLACE ':''}",
-        "%7*%{(mode()=='v')?'  VISUAL ':''}",
-        '%* %<%.30F%*',                      -- path, trunc to 30 length
-        '%*%m%*',                            -- modified flag
-        '%=',                                -- right align
-        '%{strlen(&ft)?&ft:"none"} ',        -- filetype
-        '(%{strlen(&fenc)?&fenc:&enc},',     -- encoding
-          '%{&fileformat})',                   -- file format
-        '%*%5l%*',                           -- current line
-        '%*/%L %*',                          -- total lines
-        '%*%4v\' %*',                        -- virtual column number
-        '%*0x%04B %*',                       -- character under cursor
-      }
-      vim.o.statusline = table.concat(statusline)
+vim.cmd('command! Statusl lua statusl()')
+local statusline = {
+  "%#DiffAdd#%{(mode()=='n')?'  NORMAL ':''}",
+  "%6*%{(mode()=='i')?'  INSERT ':''}",
+  "%8*%{(mode()=='r')?'  RPLACE ':''}",
+  "%7*%{(mode()=='v')?'  VISUAL ':''}",
+  '%* %<%.30F%*',                      -- path, trunc to 30 length
+  '%*%m%*',                            -- modified flag
+  '%=',                                -- right align
+  '%{strlen(&ft)?&ft:"none"} ',        -- filetype
+  '(%{strlen(&fenc)?&fenc:&enc},',     -- encoding
+  '%{&fileformat})',                   -- file format
+  '%*%5l%*',                           -- current line
+  '%*/%L %*',                          -- total lines
+  '%*%4v\' %*',                        -- virtual column number
+  '%*0x%04B %*',                       -- character under cursor
+}
+vim.o.statusline = table.concat(statusline)
 --}}}
 

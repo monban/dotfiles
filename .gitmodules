@@ -26,10 +26,6 @@
 	path = .local/share/nvim/site/pack/editing/start/fzf.vim
 	url = https://github.com/junegunn/fzf.vim.git
 	branch = master
-[submodule "vim-polyglot"]
-	path = .local/share/nvim/site/pack/editing/start/vim-polyglot
-	url = https://github.com/sheerun/vim-polyglot.git
-	branch = master
 [submodule "rnvimr"]
 	path = .local/share/nvim/site/pack/editing/start/rnvimr
 	url = https://github.com/kevinhwang91/rnvimr
