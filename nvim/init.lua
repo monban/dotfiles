@@ -18,6 +18,8 @@ local on_attach = function(_, bufnr)
 
   vim.api.nvim_command("au! * <buffer>")
   vim.api.nvim_command("au CursorHoldI <buffer> :lua Show_func_help()")
+  vim.api.nvim_command("au InsertLeave <buffer> :lua vim.lsp.buf.formatting()")
+  vim.api.nvim_command("au BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()")
 end
 
 nvim_lsp.sumneko_lua.setup {
@@ -46,11 +48,6 @@ function GetFileDirectory()
   vim.fn.expand('%:p:h')
 end
 
-nvim_lsp.solargraph.setup {
-  root_dir = GetFileDirectory,
-  on_attach = on_attach
-}
-
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/flynn/tmp/run"
 
@@ -59,12 +56,12 @@ nvim_lsp.omnisharp.setup{
   on_attach = on_attach,
 }
 
+nvim_lsp.tsserver.setup{
+  cmd = { "typescript-language-server", "--stdio" },
+  on_attach = on_attach,
+}
+
 local servers = {
-  'jsonls',
-  'vimls',
-  'clangd',
-  'gdscript',
-  'angularls',
   'gopls',
 }
 for _, lsp in ipairs(servers) do
@@ -156,6 +153,7 @@ require'nvim-treesitter.configs'.setup {
     "json",
     "javascript",
     "lua",
+    "html",
   },
   highlight = {
     enable = true,
