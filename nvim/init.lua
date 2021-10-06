@@ -1,3 +1,6 @@
+-- Disable vim_polyglot for filetypes handled by Treesitter
+-- (must be done before vim_polyglot is loaded)
+vim.g['polyglot_disabled'] = { 'go', 'ruby', 'fish', 'bash', 'gomod', 'json', 'javascript', 'lua', 'html' }
 vim.cmd('packloadall')
 
 -- LSP{{{
@@ -166,12 +169,12 @@ require'nvim-treesitter.configs'.setup {
   },
   additional_vim_regex_highlighting = false,
 }
+
 -- }}}
 
 -- Display Settings{{{
 vim.o.termguicolors = true
 vim.cmd('syntax off')
-vim.cmd('colorscheme gruvbox')
 vim.wo.number = true
 vim.wo.wrap = false
 vim.wo.cursorline = true
@@ -193,6 +196,7 @@ end
 
 vim.cmd('autocmd! User FloatPreviewWinOpen')
 vim.cmd('autocmd User FloatPreviewWinOpen lua DisableExtras()')
+
 --}}}
 
 -- file browser stuff{{{
@@ -235,9 +239,31 @@ end
 -- Other bindings{{{
 vim.api.nvim_set_keymap('i', 'kj', '<Esc>', {noremap=true,silent=true})
 vim.api.nvim_set_keymap('v', '', ":call NERDComment('x', 'toggle')<cr>", {noremap=true,silent=true})
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {noremap=true,silent=true})
 --}}}
 
 -- Autocommands{{{
+--}}}
+
+-- statusline{{{
+vim.cmd('command! Statusl lua statusl()')
+local statusline = {
+  "%#DiffAdd#%{(mode()=='n')?'  NORMAL ':''}",
+  "%6*%{(mode()=='i')?'  INSERT ':''}",
+  "%8*%{(mode()=='r')?'  RPLACE ':''}",
+  "%7*%{(mode()=='v')?'  VISUAL ':''}",
+  '%* %<%.30F%*',                      -- path, trunc to 30 length
+  '%*%m%*',                            -- modified flag
+  '%=',                                -- right align
+  '%{strlen(&ft)?&ft:"none"} ',        -- filetype
+  '(%{strlen(&fenc)?&fenc:&enc},',     -- encoding
+  '%{&fileformat})',                   -- file format
+  '%*%5l%*',                           -- current line
+  '%*/%L %*',                          -- total lines
+  '%*%4v\' %*',                        -- virtual column number
+  '%*0x%04B %*',                       -- character under cursor
+}
+vim.o.statusline = table.concat(statusline)
 --}}}
 
 -- Etc{{{
@@ -266,26 +292,5 @@ require'bufferline'.setup{
     sort_by = 'relative_directory',
   }
 }
+vim.cmd('colorscheme gruvbox')
 --}}}
-
--- statusline{{{
-vim.cmd('command! Statusl lua statusl()')
-local statusline = {
-  "%#DiffAdd#%{(mode()=='n')?'  NORMAL ':''}",
-  "%6*%{(mode()=='i')?'  INSERT ':''}",
-  "%8*%{(mode()=='r')?'  RPLACE ':''}",
-  "%7*%{(mode()=='v')?'  VISUAL ':''}",
-  '%* %<%.30F%*',                      -- path, trunc to 30 length
-  '%*%m%*',                            -- modified flag
-  '%=',                                -- right align
-  '%{strlen(&ft)?&ft:"none"} ',        -- filetype
-  '(%{strlen(&fenc)?&fenc:&enc},',     -- encoding
-  '%{&fileformat})',                   -- file format
-  '%*%5l%*',                           -- current line
-  '%*/%L %*',                          -- total lines
-  '%*%4v\' %*',                        -- virtual column number
-  '%*0x%04B %*',                       -- character under cursor
-}
-vim.o.statusline = table.concat(statusline)
---}}}
-

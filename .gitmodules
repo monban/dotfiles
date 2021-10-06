@@ -54,3 +54,9 @@
 	path = .local/share/nvim/site/pack/editing/start/lush.nvim
 	url = https://github.com/rktjmp/lush.nvim
 	branch = main
+[submodule ".local/share/nvim/site/pack/editing/start/nvim-code-action-menu"]
+	path = .local/share/nvim/site/pack/editing/start/nvim-code-action-menu
+	url = https://github.com/weilbith/nvim-code-action-menu
+[submodule ".local/share/nvim/site/pack/editing/start/vim-polyglot"]
+	path = .local/share/nvim/site/pack/editing/start/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot
