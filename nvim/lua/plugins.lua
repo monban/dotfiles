@@ -8,14 +8,12 @@ end
 
 require'paq' {
   'savq/paq-nvim';
-  'hrsh7th/cmp-nvim-lsp';
   'mattn/emmet-vim';
   'junegunn/fzf.vim';
   'ellisonleao/gruvbox.nvim';
   'rktjmp/lush.nvim';
   'preservim/nerdcommenter';
   'akinsho/nvim-bufferline.lua';
-  'hrsh7th/nvim-cmp';
   'weilbith/nvim-code-action-menu';
   'neovim/nvim-lspconfig';
   'nvim-treesitter/nvim-treesitter';
@@ -26,4 +24,9 @@ require'paq' {
   'sheerun/vim-polyglot';
   'tpope/vim-repeat';
   'tpope/vim-surround';
+
+  -- Completion stuff
+  'hrsh7th/cmp-nvim-lsp';
+  'hrsh7th/nvim-cmp';
+  'hrsh7th/cmp-buffer';
 }
