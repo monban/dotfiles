@@ -1,10 +1,12 @@
 -- Disable vim_polyglot for filetypes handled by Treesitter
 -- (must be done before vim_polyglot is loaded)
 vim.g['polyglot_disabled'] = { 'go', 'ruby', 'fish', 'bash', 'gomod', 'json', 'javascript', 'lua', 'html' }
-vim.cmd('packloadall')
+require'plugins'
 
 -- LSP{{{
 local nvim_lsp = require('lspconfig')
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local on_attach = function(_, bufnr)
   local opts = { noremap=true, silent=true }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -16,8 +18,6 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>d', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-space>', '<C-x><C-o>', opts)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   vim.api.nvim_command("au! * <buffer>")
   vim.api.nvim_command("au CursorHoldI <buffer> :lua Show_func_help()")
@@ -207,6 +207,27 @@ vim.g['rnvimr_enable_bw'] = 1
 
 -- Completion Settings{{{
 vim.o.completeopt = 'menuone,noinsert,noselect,longest'
+local cmp = require'cmp'
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+    end,
+  },
+  mapping = {
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  })
+})
+
 --}}}
 
 -- Tab Settings{{{
@@ -230,9 +251,9 @@ for lhs, rhs in pairs({
   ['<leader>ev'] = ':e $MYVIMRC<cr>',
   ['<C-p>']      = ':Files<cr>',
   ['<C-e>']      = ':RnvimrToggle<cr>',
-  ['']         = ":call NERDComment('n', 'toggle')<cr>",
+  ['']         = ":call nerdcommenter#Comment('n', 'toggle')<cr>",
 }) do
-  vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
+vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
 end
 --}}}
 
