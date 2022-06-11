@@ -1,33 +1,39 @@
 -- Disable vim_polyglot for filetypes handled by Treesitter
 -- (must be done before vim_polyglot is loaded)
 vim.g['polyglot_disabled'] = { 'go', 'ruby', 'fish', 'bash', 'gomod', 'json', 'javascript', 'lua', 'html' }
-require'plugins'
+require 'plugins'
 
 -- LSP{{{
 local nvim_lsp = require('lspconfig')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-local on_attach = function(_, bufnr)
-  local opts = { noremap=true, silent=true }
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>d', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+local on_attach = function(_)
+  local opts = { noremap = true, silent = true }
 
-  vim.api.nvim_command("au! * <buffer>")
-  vim.api.nvim_command("au CursorHoldI <buffer> :lua Show_func_help()")
-  vim.api.nvim_command("au InsertLeave <buffer> :lua vim.lsp.buf.formatting()")
-  vim.api.nvim_command("au BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()")
+  for lhs, rhs in pairs({
+    ['K'] = vim.lsp.buf.hover,
+    ['gd'] = vim.lsp.buf.definition,
+    ['gD'] = vim.lsp.buf.declaration,
+    ['gi'] = vim.lsp.buf.implementation,
+    ['<C-k>'] = vim.lsp.buf.signature_help,
+    ['<leader>D'] = vim.lsp.buf.type_definition,
+    ['<leader>r'] = vim.lsp.buf.rename,
+    ['<leader>d'] = vim.lsp.util.show_line_diagnostics,
+    ['gr'] = vim.lsp.buf.references
+  }) do
+    vim.keymap.set('n', lhs, rhs, opts)
+  end
+
+  vim.api.nvim_create_autocmd('InsertLeave', { buffer = 0, callback = vim.lsp.buf.formatting })
+  vim.api.nvim_create_autocmd('BufWritePre', { buffer = 0, callback = vim.lsp.buf.formatting_sync })
+
+  -- vim.api.nvim_command("au CursorHoldI <buffer> :lua Show_func_help()")
 end
 
 nvim_lsp.sumneko_lua.setup {
-  cmd = {"/usr/bin/lua-language-server"},
+  cmd = { "/usr/bin/lua-language-server" },
   on_attach = on_attach,
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
@@ -35,7 +41,7 @@ nvim_lsp.sumneko_lua.setup {
         path = vim.split(package.path, ';'),
       },
       diagnostics = {
-        globals = {'vim'},
+        globals = { 'vim' },
       },
       workspace = {
         library = {
@@ -54,12 +60,12 @@ end
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/home/flynn/tmp/run"
 
-nvim_lsp.omnisharp.setup{
+nvim_lsp.omnisharp.setup {
   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
   on_attach = on_attach,
 }
 
-nvim_lsp.tsserver.setup{
+nvim_lsp.tsserver.setup {
   cmd = { "typescript-language-server", "--stdio" },
   on_attach = on_attach,
 }
@@ -70,6 +76,7 @@ local servers = {
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
+    capabilities = capabilities
   }
 end
 
@@ -84,6 +91,7 @@ local function lsp_codeaction(code_action, timeout_ms)
   -- See the implementation of the textDocument/codeAction callback
   -- (lua/vim/lsp/handler.lua) for how to do this properly.
   local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
+  P(result)
   if not result or next(result) == nil then return end
   local actions = result[1].result
   if not actions then return end
@@ -115,7 +123,7 @@ local function make_function_position_param()
     return { line = 0; character = 0 }
   end
   row = row - 1
-  local line = vim.api.nvim_buf_get_lines(0, row, row+1, true)[1]
+  local line = vim.api.nvim_buf_get_lines(0, row, row + 1, true)[1]
   if not line then
     return { line = 0; character = 0; }
   end
@@ -146,7 +154,7 @@ end
 --}}}
 
 -- Treesitter {{{
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "go",
     "ruby",
@@ -169,6 +177,7 @@ require'nvim-treesitter.configs'.setup {
   },
   additional_vim_regex_highlighting = false,
 }
+local ts = require('nvim-treesitter')
 
 -- }}}
 
@@ -181,7 +190,7 @@ vim.wo.cursorline = true
 vim.o.hidden = true
 vim.wo.signcolumn = 'number'
 vim.wo.list = true
-vim.o.listchars='tab:->,nbsp:_,trail:.'
+vim.o.listchars = 'tab:->,nbsp:_,trail:.'
 vim.o.guifont = 'FiraCode-Regular:h22'
 vim.g.airline_powerline_fonts = 1
 
@@ -206,19 +215,19 @@ vim.g['rnvimr_enable_bw'] = 1
 --}}}
 
 -- Completion Settings{{{
-vim.o.completeopt = 'menuone,noinsert,noselect,longest'
-local cmp = require'cmp'
+--vim.o.completeopt = 'menuone,noinsert,noselect,longest'
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+local cmp = require 'cmp'
 
 cmp.setup({
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+      require('luasnip').lsp_expand(args.body)
     end,
   },
   mapping = {
+    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+    ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
@@ -251,16 +260,17 @@ for lhs, rhs in pairs({
   ['<leader>ev'] = ':e $MYVIMRC<cr>',
   ['<C-p>']      = ':Files<cr>',
   ['<C-e>']      = ':RnvimrToggle<cr>',
-  ['']         = ":call nerdcommenter#Comment('n', 'toggle')<cr>",
+  ['']          = ":call nerdcommenter#Comment('n', 'toggle')<cr>",
 }) do
-vim.api.nvim_set_keymap('n', lhs, rhs, {noremap=true,silent=true})
+  vim.keymap.set('n', lhs, rhs, opts)
+  vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = true, silent = true })
 end
 --}}}
 
 -- Other bindings{{{
-vim.api.nvim_set_keymap('i', 'kj', '<Esc>', {noremap=true,silent=true})
-vim.api.nvim_set_keymap('v', '', ":call NERDComment('x', 'toggle')<cr>", {noremap=true,silent=true})
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {noremap=true,silent=true})
+vim.api.nvim_set_keymap('i', 'kj', '<Esc>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '', ":call NERDComment('x', 'toggle')<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 --}}}
 
 -- Autocommands{{{
@@ -273,16 +283,17 @@ local statusline = {
   "%6*%{(mode()=='i')?'  INSERT ':''}",
   "%8*%{(mode()=='r')?'  RPLACE ':''}",
   "%7*%{(mode()=='v')?'  VISUAL ':''}",
-  '%* %<%.30F%*',                      -- path, trunc to 30 length
-  '%*%m%*',                            -- modified flag
-  '%=',                                -- right align
-  '%{strlen(&ft)?&ft:"none"} ',        -- filetype
-  '(%{strlen(&fenc)?&fenc:&enc},',     -- encoding
-  '%{&fileformat})',                   -- file format
-  '%*%5l%*',                           -- current line
-  '%*/%L %*',                          -- total lines
-  '%*%4v\' %*',                        -- virtual column number
-  '%*0x%04B %*',                       -- character under cursor
+  '%* %<%.30F%*', -- path, trunc to 30 length
+  '%*%m%*', -- modified flag
+  '%=', -- right align
+  ts.statusline(20),
+  '%{strlen(&ft)?&ft:"none"} ', -- filetype
+  '(%{strlen(&fenc)?&fenc:&enc},', -- encoding
+  '%{&fileformat})', -- file format
+  '%*%5l%*', -- current line
+  '%*/%L %*', -- total lines
+  '%*%4v\' %*', -- virtual column number
+  '%*0x%04B %*', -- character under cursor
 }
 vim.o.statusline = table.concat(statusline)
 --}}}
@@ -290,7 +301,7 @@ vim.o.statusline = table.concat(statusline)
 -- Etc{{{
 vim.o.updatetime = 1000
 vim.wo.foldmethod = 'marker'
-require'bufferline'.setup{
+require 'bufferline'.setup {
   options = {
     view = "multiwindow",
     numbers = "none",
