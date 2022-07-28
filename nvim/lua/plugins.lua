@@ -10,13 +10,9 @@ require 'paq' {
   'savq/paq-nvim';
   'mattn/emmet-vim';
   'junegunn/fzf.vim';
-  'ellisonleao/gruvbox.nvim';
-  'rktjmp/lush.nvim';
-  'preservim/nerdcommenter';
   'akinsho/bufferline.nvim';
   'weilbith/nvim-code-action-menu';
   'neovim/nvim-lspconfig';
-  'nvim-treesitter/nvim-treesitter';
   'kyazdani42/nvim-web-devicons';
   'roxma/nvim-yarp';
   'kevinhwang91/rnvimr';
@@ -27,9 +23,18 @@ require 'paq' {
   'code-biscuits/nvim-biscuits';
   'fatih/vim-go';
 
+  -- Treesitter
+  'nvim-treesitter/nvim-treesitter';
+  'nvim-treesitter/playground';
+
+  -- Themes
+  'tjdevries/colorbuddy.vim';
+  'tjdevries/gruvbuddy.nvim';
+  'Th3Whit3Wolf/onebuddy';
+
   -- Completion stuff
-  'hrsh7th/cmp-nvim-lsp';
   'hrsh7th/nvim-cmp';
+  'hrsh7th/cmp-nvim-lsp';
   'hrsh7th/cmp-buffer';
   'L3MON4D3/LuaSnip';
   'saadparwaiz1/cmp_luasnip';
