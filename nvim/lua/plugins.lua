@@ -22,6 +22,7 @@ require 'paq' {
   'tpope/vim-surround';
   'code-biscuits/nvim-biscuits';
   'fatih/vim-go';
+  'numToStr/Comment.nvim';
 
   -- Treesitter
   'nvim-treesitter/nvim-treesitter';

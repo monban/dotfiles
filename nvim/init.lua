@@ -71,8 +71,14 @@ nvim_lsp.omnisharp.setup {
 --}
 
 local servers = {
-  'gopls', 'denols',
+  'denols',
 }
+
+nvim_lsp.gopls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -343,4 +349,5 @@ require 'bufferline'.setup {
   }
 }
 require('colorbuddy').colorscheme('onebuddy')
+require('Comment').setup()
 --}}}
