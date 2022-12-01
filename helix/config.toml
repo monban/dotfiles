@@ -1,0 +1,18 @@
+theme="bogster-custom"
+
+[editor]
+true-color=true
+cursorline=true
+color-modes=true
+
+[editor.cursor-shape]
+insert="bar"
+
+[editor.whitespace.render]
+tab = "all"
+
+[editor.whitespace.characters]
+tab = "→"
+
+[editor.indent-guides]
+render=true
