@@ -1,12 +1,13 @@
-theme="bogster-custom"
+theme = "kanagawa-custom"
 
 [editor]
-true-color=true
-cursorline=true
-color-modes=true
+true-color  = true
+cursorline  = true
+color-modes = true
+bufferline  = "multiple"
 
 [editor.cursor-shape]
-insert="bar"
+insert= "bar"
 
 [editor.whitespace.render]
 tab = "all"
@@ -15,4 +16,12 @@ tab = "all"
 tab = "→"
 
 [editor.indent-guides]
-render=true
+render = true
+
+[keys.normal]
+"C-s"   = ":w"
+"tab"   = ":buffer-next"
+"S-tab" = ":buffer-previous"
+
+[keys.insert]
+"C-space" = "completion"
